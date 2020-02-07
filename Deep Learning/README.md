@@ -1,10 +1,12 @@
 # Deep Learning
 
-- [Machine learning basic concepts](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Machine%20learning%20basic%20concepts.md)
+- Machine learning
+  - [Machine learning basic concepts](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Machine%20learning%20basic%20concepts.md)
+  - [Tensorflow basic operations](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Tensorflow%20basic%20operations.md)
 - Linear regression
   - [What is linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Linear%20regression.md)
   - [How to minimize cost](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/How%20to%20minimize%20cost.md)
-- Logistic regression (classification)
+- Logistic regression
 - Multivariable regression
   - [Multivariable linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Multivariable%20linear%20regression.md)
   - Multivariable logistic regression
