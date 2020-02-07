@@ -35,7 +35,7 @@ from numpy.linalg import norm
 def cos_sim(A,B):
     return dot(A,B)/(norm(A)*norm(B))
 ```
-위의 문서들에 대한 BoW를 만든다.
+위의 문서들에 대한 [BoW](https://github.com/jionchu/TIL/blob/master/NLP/Bag%20of%20Words(BoW).md)를 만든다.
 ```python
 doc1 = np.array([0,1,1,1])
 doc2 = np.array([1,0,1,1])
@@ -55,5 +55,3 @@ print(cos_sim(doc2,doc3))
 - 문서2와 문서3의 코사인 유사도가 1이 나옴  
 -> 한 문서 내의 모든 단어의 빈도수가 똑같이 증가하는 경우 코사인 유사도가 1이다.  
 - 문서2와 문서3의 코사인 유사도가 1이므로 문서1과 문서2의 코사인 유사도와 문서1과 문서3의 코사인 유사도는 같다.
-
-참고: https://wikidocs.net/24603
