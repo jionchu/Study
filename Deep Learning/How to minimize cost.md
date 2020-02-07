@@ -10,7 +10,7 @@ W=1, cost(W)=0
 W=0, cost(W)=4.67  
 W=2, cost(W)=4.67  
 => W 값의 변화에 따라 cost 값이 어떻게 변화하는지 그래프 그려보기  
-![cost graph](https://github.com/jionchu/Study/blob/master/Deep%20Learning/DeepLearningZeroToAll/images/cost-graph.png)  
+![cost graph](https://github.com/jionchu/Study/blob/master/Deep%20Learning/images/cost-graph.png)  
 => cost 값이 가장 작은 W 알아내기
 
 ## 1. Gradient descent algorithm
@@ -39,10 +39,10 @@ W=2, cost(W)=4.67
 
 ## 2. Convex function
 ### non-convex function
-![non-convex function](https://github.com/jionchu/Study/blob/master/Deep%20Learning/DeepLearningZeroToAll/images/non-convex-function.png)  
+![non-convex function](https://github.com/jionchu/Study/blob/master/Deep%20Learning/images/non-convex-function.png)  
 - cost function이 convex function이 아닌 경우 시작점에 따라 결과값이 다르게 나옴 => 알고리즘이 제대로 동작하지 않음  
 
 ### convex function
-![convex function](https://github.com/jionchu/Study/blob/master/Deep%20Learning/DeepLearningZeroToAll/images/convex-function.png)
+![convex function](https://github.com/jionchu/Study/blob/master/Deep%20Learning/images/convex-function.png)
 - convex function의 경우 Gradient decent algorithm이 항상 답을 찾음
 - Linear regression을 적용하기 전에 cost function이 convex function 모양인지 확인해야 함

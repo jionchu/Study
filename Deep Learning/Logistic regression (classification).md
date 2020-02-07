@@ -1,4 +1,4 @@
-# 03. Logistic (regression) classification
+# Logistic (regression) classification
 
 ## 1. Logistic classification
 Classification 알고리즘 중에서 정확도가 높은 것으로 알려져 있다. 실제 문제에 바로 적용해 볼 수 있기 때문에 굉장히 중요한 알고리즘
@@ -8,8 +8,8 @@ Classification 알고리즘 중에서 정확도가 높은 것으로 알려져 �
 - Spam Detection: Spam or Ham
 - Facebook feed: show or hide
 - Credit Card Fraudulent Transaction detection: legitimate/fraud
-- => 평소에 신용카드를 사용하던 패턴을 분석하여 현재 사용하는 사람이 진짜인지 가짜인지 판단
-- 주식 시장에서 주식을 살지 말지 주식동향을 분석하여 판단
+  - => 평소에 신용카드를 사용하던 패턴을 분석하여 현재 사용하는 사람이 진짜인지 가짜인지 판단
+  - 주식 시장에서 주식을 살지 말지 주식동향을 분석하여 판단
 
 ### 1-2. 0, 1 encoding
 - Spam Detection: Spam(1) or Ham(0)
