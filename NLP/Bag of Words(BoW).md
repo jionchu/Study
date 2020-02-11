@@ -52,14 +52,3 @@ bow
 [1, 2, 1, 1, 2, 1, 1, 1, 1, 1]
 ```
 원한다면 한국어에서 불용어에 해당되는 조사들도 제거하여 더 정제된 BoW를 만들 수도 있다.
-
-## 2. 유사도를 이용한 추천 시스템 구현하기
-캐글에서 사용되었던 영화 데이터셋을 가지고 영화 추천 시스템을 만든다. TF-IDF와 코사인 유사도만으로 영화의 줄거리에 기반해서 영화를 추천하는 추천 시스템을 만들 수 있다.  
-데이터 다운로드 링크 : https://www.kaggle.com/rounakbanik/the-movies-dataset  
-위 링크의 movies_metadata.csv 파일 이용  
-
-```python
-import pandas as pd
-data = pd.read_csv('C:\Users\USER\Desktop\movies_metadata.csv',low_memory=False)
-data.head(2)
-```
