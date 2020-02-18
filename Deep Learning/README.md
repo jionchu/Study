@@ -7,6 +7,7 @@
   - [What is linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Linear%20regression.md)
   - [How to minimize cost](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/How%20to%20minimize%20cost.md)
 - Logistic regression
+  - [Logistic regression (classification)](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Logistic%20regression%20(classification))
 - Multivariable regression
   - [Multivariable linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Multivariable%20linear%20regression.md)
   - Multivariable logistic regression
