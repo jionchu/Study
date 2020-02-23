@@ -45,5 +45,5 @@ y: 실제값, H(X): 예측값 → y=1, H(x)=1 ⇒ cost(1)=0 / y=1, H(x)=0 ⇒ co
 
 ### Minimize cost - Gradient descent algorithm
 <img src="https://latex.codecogs.com/svg.latex?\;H(X)=\frac{1}{(1+e^{-{W^T}X})}" title="Logistic hypothesis"/>
-<img src="https://latex.codecogs.com/svg.latex?\;cost(W)=-\frac{1}{m}\sum{ylog(H(x))+(1-y)log(1-H(X))}" title="Cost function"/>
+<img src="https://latex.codecogs.com/svg.latex?\;cost(W)=-\frac{1}{m}\sum{ylog(H(x))+(1-y)log(1-H(x))}" title="Cost function"/>
 <img src="https://latex.codecogs.com/svg.latex?\;W:=W-\alpha\frac{\partial}{\partial{W}}cost(W)" title="Gradient descent algorithm"/>
