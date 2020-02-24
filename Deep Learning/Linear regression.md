@@ -49,7 +49,7 @@ cost = tf.reduce_mean(tf.square(hypothesis - y_train))
 ### Minimize
 - tensorflow에는 여러 가지 방법이 있지만 그 중에 한 가지 __Gradient Descent__ 를 이용
 - 무엇을 minimize할 것인지 optimizer의 minimize함수에 전달
-- -> tensorflow가 W와 b 값을 조절하여 알아서 minimize함 => Magic!!
+- → tensorflow가 W와 b 값을 조절하여 알아서 minimize함 ⇒ Magic!!
 ```python
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
 train = optimizer.minimize(cost)

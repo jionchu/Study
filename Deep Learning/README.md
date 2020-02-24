@@ -3,6 +3,7 @@
 - Machine learning
   - [Machine learning basic concepts](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Machine%20learning%20basic%20concepts.md)
   - [Tensorflow basic operations](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Tensorflow%20basic%20operations.md)
+  - [Learning rate, Overffiting, Regularization](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Learning%20rate,%20Overffiting,%20Regularization.md)
 - Linear regression
   - [What is linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Linear%20regression.md)
   - [How to minimize cost](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/How%20to%20minimize%20cost.md)
