@@ -3,7 +3,8 @@
 ## 1. Learning rate
 learning rate를 잘 정하는 것이 중요하다.  
 - learning rate가 너무 크면 학습이 이루어지지 않는다. → overshooting
-- learning rate가 너무 작으면 학습이 너무 오래 걸린다. → local minimum에서 멈출 수 있다.
+- learning rate가 너무 작으면 학습이 너무 오래 걸린다. → local minimum에서 멈출 수 있다.  
+![learning rate problems](https://github.com/jionchu/Study/blob/master/Deep%20Learning/images/overshooting,%20local%20minimum.png)  
 
 ### Try several learning rates
 - cost function 값을 확인해보기
