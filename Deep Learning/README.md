@@ -3,18 +3,18 @@
 - Machine learning
   - [Machine learning basic concepts](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Machine%20learning%20basic%20concepts.md)
   - [Tensorflow basic operations](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Tensorflow%20basic%20operations.md)
-  - [Learning rate, Overffiting, Regularization](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Learning%20rate,%20Overffiting,%20Regularization.md)
+  - [Learning rate, Overfitting, Regularization](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Learning%20rate,%20Overfitting,%20Regularization.md)
+  - [Training, Test data set](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Training,%20Test%20data%20set.md)
 - Linear regression
   - [What is linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Linear%20regression.md)
   - [How to minimize cost](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/How%20to%20minimize%20cost.md)
+  - [Multivariable linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Multivariable%20linear%20regression.md)
 - Logistic regression
   - [Logistic regression (classification)](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Logistic%20regression%20(classification).md)
   - [Multinomial classification](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Multinomial%20classification.md)
-- Multivariable regression
-  - [Multivariable linear regression](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Multivariable%20linear%20regression.md)
-  - Multivariable logistic regression
 - Neural networks
 - Deep learning
+  - [Deep learning basic concepts](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Deep%20learning%20basic%20concepts.md)
   - CNN
   - RNN
   - Bidirectional neural networks
