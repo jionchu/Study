@@ -12,9 +12,9 @@
 - Logistic regression
   - [Logistic regression (classification)](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Logistic%20regression%20(classification).md)
   - [Multinomial classification](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Multinomial%20classification.md)
-- Neural networks
 - Deep learning
   - [Deep learning basic concepts](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Deep%20learning%20basic%20concepts.md)
+  - [Backpropagation](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Backpropagation.md)
   - CNN
   - RNN
   - Bidirectional neural networks
