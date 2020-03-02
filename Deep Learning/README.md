@@ -15,6 +15,7 @@
 - Deep learning
   - [Deep learning basic concepts](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Deep%20learning%20basic%20concepts.md)
   - [Backpropagation](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Backpropagation.md)
+  - [ReLU](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/ReLU.md)
   - CNN
   - RNN
   - Bidirectional neural networks
