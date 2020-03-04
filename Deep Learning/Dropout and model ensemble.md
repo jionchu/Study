@@ -26,7 +26,7 @@ Regularization은 특정 weight이 너무 커지지 않게 조절한다.
 일종의 regularization의 방법  
 random하게 어떤 노드들을 끄고 (0으로 만들고) 계산한다.  
 train할 때만 dropout 되기 때문에 모델을 평가할 때는 dropout_rate를 1로 줘야 함 (dropout하는게 없다는 의미)  
-![dropout](https://github.com/jionchu/Study/blob/master/Deep%20Learning/images/dropout.png)  
+![dropout](https://github.com/jionchu/Study/blob/master/Deep%20Learning/images/dropout.PNG)  
 
 ### Dropout의 장점
 - 다양한 모델을 학습시켜서 결합하는 것과 같은 효과를 얻는다.  

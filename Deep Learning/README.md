@@ -17,7 +17,7 @@
   - [Backpropagation](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Backpropagation.md)
   - [ReLU](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/ReLU.md)
   - [Dropout and model ensemble](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Dropout%20and%20model%20ensemble.md)
-  - CNN
+  - [CNN](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/CNN.md)
   - RNN
   - Bidirectional neural networks
 
