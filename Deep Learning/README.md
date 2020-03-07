@@ -20,7 +20,7 @@
   - CNN
     - [CNN](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/CNN.md)
     - [Max pooling, FC layer](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/Max%20pooling,%20FC%20layer.md)
-  - RNN
+  - [RNN](https://github.com/jionchu/TIL/blob/master/Deep%20Learning/RNN.md)
   - Bidirectional neural networks
 
 참고: [모두를 위한 딥러닝](https://www.youtube.com/watch?v=BS6O0zOGX4E&list=PLlMkM4tgfjnLSOjrEJN31gZATbcj_MpUm)
