@@ -49,3 +49,21 @@ N = 7, F = 3
 convolution layer들의 weight 값은 어떻게 정하나?  
 - 다른 neural network들과 같이 랜덤하게 초기화함  
 - 우리가 가진 데이터로 학습해서 정해짐  
+
+## 2. TensorFlow CNN basic
+1. convolution layer로 값을 뽑아냄
+2. sub sampling: 데이터를 작게 만듦
+3. 나눠진 값들(feature extaction: 이미지에서 뽑아낸 특징)을 일반적인 forward neural net/fully connected layer를 통해 합침
+
+Image: 1,3,3,1 image, Filter: 2,2,1(filter 색),1(filter 개수)  
+Stride: 1x1, Padding:Valid  
+tf.nn.conv2d 함수로 간단하게 구현 가능
+
+### padding
+SAME → filter의 size가 뭐든지 입력 영상과 출력 영상의 크기가 같게 나오게 해줌 → tensorflow가 알아서 필요한만큼 나머지 부분을 0으로 채움  
+- filter의 개수만큼 출력 영상이 나옴 (하나의 입력에 여러개의 출력!)  
+- convolution 후에는 pooling (subsampling) 하기  
+실험해봤을 때 CNN과 잘 동작하기 때문에 대부분 Max Pooling을 쓴다.
+```python
+tf.nn.max_pool
+```
