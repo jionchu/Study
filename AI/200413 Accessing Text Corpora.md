@@ -331,7 +331,9 @@ cfd = nltk.ConditionalFreqDist(
     for target in ['america','citizen']
     if w.lower().startswith(target)
 )
+cfd.plot()
 ```
+![conditional freq dist](https://github.com/jionchu/TIL/blob/master/AI/images/conditional_freq_dist.PNG)  
 
 ## 7. Loading your own corpus
 ### 1) PlaintextCorpusReader
