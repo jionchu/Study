@@ -367,3 +367,177 @@ intends to make
 seek to set
 ...
 ```
+
+## 3. Mapping Words to Properties Using Python Dictionaries
+
+### 1) Defining Dictionary
+- create a dictionary
+```python
+pos = {'colorless':'ADJ', 'ideas':'N', 'sleep':'V','furiously':'ADV'}
+pos = dict(colorless='ADJ', ideas='N', sleep='V', furiously='ADV')
+```
+- dictionary keys must be immutable types
+
+```python
+import nltk
+pos = {'colorless':'ADJ', 'ideas':'N', 'sleep':'V','furiously':'ADV'}
+pos['colorless']
+```
+```
+'ADJ'
+```
+```python
+pos['sleep']
+```
+```
+'V'
+```
+```python
+pos['blog']
+```
+```
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-7-14268bca594a> in <module>
+----> 1 pos('blog')
+
+TypeError: 'dict' object is not callable
+```
+
+### 2) Default dictionary
+```python
+from collections import defaultdict
+pos = defaultdict(lambda:'NOUN')
+pos['ideas'] = 'N'
+pos
+```
+```
+defaultdict(<function __main__.<lambda>()>, {'ideas': 'N'})
+```
+```python
+pos['ideas']
+```
+```
+'N'
+```
+```python
+pos['blog']
+```
+```
+'NOUN'
+```
+
+### 3) 품사 개수 세기
+#### ㄱ. 전체 품사 개수 세기
+```python
+from collections import defaultdict
+counts = defaultdict(int)
+from nltk.corpus import brown
+for (word, tag) in brown.tagged_words(categories=
+'news', tagset='universal'):
+    counts[tag] += 1
+```
+#### ㄴ. 특정 품사의 개수 알아내기
+```python
+counts['NOUN']
+```
+```
+30654
+```
+
+#### ㄷ. 개수가 많은 순서대로 품사 정렬하기
+```python
+from operator import itemgetter
+sorted(counts.items(), key=itemgetter(1), reverse=True)
+```
+```
+[('NOUN', 30654),
+ ('VERB', 14399),
+ ('ADP', 12355),
+ ('.', 11928),
+ ('DET', 11389),
+ ('ADJ', 6706),
+ ('ADV', 3349),
+ ('CONJ', 2717),
+ ('PRON', 2535),
+ ('PRT', 2264),
+ ('NUM', 2166),
+ ('X', 92)]
+```
+```python
+[t for t,c in sorted(counts.items(), key=itemgetter(1), reverse=True)]
+```
+```
+['NOUN',
+ 'VERB',
+ 'ADP',
+ '.',
+ 'DET',
+ 'ADJ',
+ 'ADV',
+ 'CONJ',
+ 'PRON',
+ 'PRT',
+ 'NUM',
+ 'X']
+```
+```python
+counts.items()
+```
+```
+dict_items([('DET', 11389), ('NOUN', 30654), ('ADJ', 6706), ('VERB', 14399), ('ADP', 12355), ('.', 11928), ('ADV', 3349), ('CONJ', 2717), ('PRT', 2264), ('PRON', 2535), ('NUM', 2166), ('X', 92)])
+```
+
+### 4) Complex Keys and Values
+```python
+pos = defaultdict(lambda: defaultdict(int))
+brown_news_tagged = brown.tagged_words(categories='news', tagset='universal')
+for ((w1, t1), (w2, t2)) in nltk.bigrams(brown_news_tagged):
+    pos[(t1, w2)][t2] += 1
+
+// right라는 단어 앞에 DET(관사)가 있는 경우 right의 품사는 무엇인가
+pos[('DET', 'right')]
+```
+```
+defaultdict(<class 'int'>, {'ADJ': 11, 'NOUN': 5})
+```
+
+### 5) Index words according to their last two letters
+```python
+last_letters = defaultdict(list)
+words = nltk.corpus.words.words('en')
+for word in words:
+    key = word[-2:]
+    last_letters[key].append(word)
+
+last_letters['ly']
+```
+```
+['abactinally',
+ 'abandonedly',
+ 'abasedly',
+ 'abashedly',
+ 'abashlessly',
+ 'abbreviately',
+ 'abdominally',
+ 'abhorrently',
+ ...
+]
+```
+```python
+last_letters['zy']
+```
+```
+['blazy',
+ 'bleezy',
+ 'blowzy',
+ 'boozy',
+ 'breezy',
+ 'bronzy',
+ 'buzzy',
+ 'Chazy',
+ 'cozy',
+ 'crazy',
+ ...
+]
+```
