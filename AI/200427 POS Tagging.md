@@ -541,3 +541,187 @@ last_letters['zy']
  ...
 ]
 ```
+
+## 4. Automatic Tagging
+
+### 1) tagged_sents()
+```python
+import nltk
+from nltk.corpus import *
+
+brown.words()
+```
+```
+['The', 'Fulton', 'County', 'Grand', 'Jury', 'said', ...]
+```
+```python
+brown.tagged_words()
+```
+```
+[('The', 'AT'), ('Fulton', 'NP-TL'), ...]
+```
+```python
+brown.tagged_words(tagset='universal')
+```
+```
+[('The', 'DET'), ('Fulton', 'NOUN'), ...]
+```
+
+#### ㄱ. 단어가 어떤 품사로 많이 사용되었는지 확인
+```python
+brown_tagged = brown.tagged_words(tagset='universal')
+cfd = nltk.ConditionalFreqDist(brown_tagged)
+```
+```python
+cfd['time']
+```
+```
+FreqDist({'NOUN': 1555, 'VERB': 1})
+```
+```python
+cfd['flies']
+```
+```
+FreqDist({'NOUN': 7, 'VERB': 4})
+```
+
+#### ㄴ. 카테고리별 태깅하기
+```python
+from nltk.corpus import brown
+brown_tagged_sents = brown.tagged_sents(categories='news')
+brown_sents = brown.sents(categories='news')
+```
+
+### 2) POS tagging classes in NLTK
+- **DefaultTagger**
+- **RegexpTagger**
+- **UnigramTagger**
+
+### 3) Default Tagger
+- 모든 tag를 하나로 통일
+#### ㄱ. 모든 tag를 'NN'으로 통일하기
+```python
+tags = [tag for (word, tag) in brown.tagged_words(categories='news')]
+nltk.FreqDist(tags).max()
+```
+```
+'NN'
+```
+```python
+raw = 'I do not like green eggs and ham, I do not like them Sam I am!'
+tokens = nltk.word_tokenize(raw)
+default_tagger = nltk.DefaultTagger('NN')
+default_tagger.tag(tokens)
+```
+```
+[('I', 'NN'),
+ ('do', 'NN'),
+ ('not', 'NN'),
+ ('like', 'NN'),
+ ('green', 'NN'),
+ ('eggs', 'NN'),
+ ('and', 'NN'),
+ ('ham', 'NN'),
+ (',', 'NN'),
+ ('I', 'NN'),
+ ('do', 'NN'),
+ ('not', 'NN'),
+ ('like', 'NN'),
+ ('them', 'NN'),
+ ('Sam', 'NN'),
+ ('I', 'NN'),
+ ('am', 'NN'),
+ ('!', 'NN')]
+```
+- 당연히 품사 정확도는 낮음
+```python
+default_tagger.evaluate(brown_tagged_sents)
+```
+```
+0.13089484257215028
+```
+
+### 4) Regular Expression Tagger
+```python
+patterns = [
+    (r'.*ing$','VBG'),
+    (r'.*ed$','VBD'),
+    (r'.*es$','VBZ'),
+    (r'.*ould$','MD'),
+    (r'.*\'s$','NN$'),
+    (r'.*s$','NNS'),
+    (r'^-?[0-9]+(.[0-9]+)?$','CD'),
+    (r'.*','NN')# default
+]
+regexp_tagger = nltk.RegexpTagger(patterns)
+regexp_tagger.tag(brown_sents[3])
+```
+```
+[('``', 'NN'),
+ ('Only', 'NN'),
+ ('a', 'NN'),
+ ('relative', 'NN'),
+ ('handful', 'NN'),
+ ('of', 'NN'),
+ ('such', 'NN'),
+ ('reports', 'NNS'),
+ ('was', 'NNS'),
+ ('received', 'VBD'),
+ ("''", 'NN'),
+ (',', 'NN'),
+ ('the', 'NN'),
+ ('jury', 'NN'),
+ ('said', 'NN'),
+ (',', 'NN'),
+ ('``', 'NN'),
+ ('considering', 'VBG'),
+ ('the', 'NN'),
+ ('widespread', 'NN'),
+ ('interest', 'NN'),
+ ('in', 'NN'),
+ ('the', 'NN'),
+ ('election', 'NN'),
+ (',', 'NN'),
+ ('the', 'NN'),
+ ('number', 'NN'),
+ ('of', 'NN'),
+ ('voters', 'NNS'),
+ ('and', 'NN'),
+ ('the', 'NN'),
+ ('size', 'NN'),
+ ('of', 'NN'),
+ ('this', 'NNS'),
+ ('city', 'NN'),
+ ("''", 'NN'),
+ ('.', 'NN')]
+```
+- DefaultTagger보다는 정확도가 높음
+```python
+regexp_tagger.evaluate(brown_tagged_sents)
+```
+```
+0.20326391789486245
+```
+
+### 5) Unigram Tagger (Lookup Tagger)
+```python
+fd = nltk.FreqDist(brown.words(categories='news'))
+cfd = nltk.ConditionalFreqDist(brown.tagged_words(categories='news'))
+most_freq_words = fd.most_common(100)
+likely_tags = dict((word, cfd[word].max()) for (word, _) in most_freq_words)
+baseline_tagger = nltk.UnigramTagger(model=likely_tags)
+baseline_tagger.evaluate(brown_tagged_sents)
+```
+```
+0.45578495136941344
+```
+
+### 6) Conbining Taggers: backoff tagging
+Unigram tagger에서 most_common으로 가장 많이 사용된 일부의 단어들만 찾을 수 있으므로 backoff를 이용하여 default tag를 설정해준다.  
+```python
+baseline_tagger = nltk.UnigramTagger(model=likely_tags,backoff=nltk.DefaultTagger('NN'))
+baseline_tagger.evaluate(brown_tagged_sents)
+```
+```
+0.5817769556656125
+```

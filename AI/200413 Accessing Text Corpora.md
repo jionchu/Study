@@ -292,7 +292,7 @@ cfd.tabulate(conditions=genres, samples=x)
         fiction        16         1         5         2         0 
      government         1        27         0         0         0 
         hobbies         6         5         0         0         0 
-          humor         4         1         17         1         0 
+          humor         4         1         17        1         0 
         learned        13        11         0         4         0 
            lore        19         2         0         3         1 
         mystery         7         0         0         8         0 
