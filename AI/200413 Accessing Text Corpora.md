@@ -277,11 +277,30 @@ cfd.tabulate(conditions=genres, samples=modals)
 
 ```python
 x = ['love', 'president', 'funny', 'crime', 'god']
+genres = brown.categories()
 cfd = nltk.ConditionalFreqDist(
     (genre,word)
     for genre in brown.categories()
     for word in brown.words(categories=genre))
-cfd.tabulate(conditions=brown.categories, samples=x)
+cfd.tabulate(conditions=genres, samples=x)
+```
+```
+                     love president  funny     crime   awesome 
+      adventure         9         0         2         2         0 
+ belles_lettres        68         7         1         5         0 
+      editorial        13         7         1         1         0 
+        fiction        16         1         5         2         0 
+     government         1        27         0         0         0 
+        hobbies         6         5         0         0         0 
+          humor         4         1         17         1         0 
+        learned        13        11         0         4         0 
+           lore        19         2         0         3         1 
+        mystery         7         0         0         8         0 
+           news         3        53         0         3         0 
+       religion        13         1         0         0         1 
+        reviews         7         1         6         1         0 
+        romance        32         9         7         1         1 
+science_fiction         3         0         0         1         1 
 ```
 
 ## 5. Reuters Corpus
