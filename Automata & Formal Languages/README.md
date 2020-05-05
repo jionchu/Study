@@ -4,4 +4,4 @@
 - Finite Automata
   - [유한 오토마타](https://github.com/jionchu/TIL/blob/master/Automata%20&%20Formal%20Languages/유한%20오토마타.md)
   - 정규 언어와 정규 문법
-  - 정규 언어의 성질
+  - [정규 언어의 성질](https://github.com/jionchu/TIL/blob/master/Automata%20&%20Formal%20Languages/정규%20언어의%20성질.md)
