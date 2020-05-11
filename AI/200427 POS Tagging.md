@@ -725,3 +725,176 @@ baseline_tagger.evaluate(brown_tagged_sents)
 ```
 0.5817769556656125
 ```
+
+## 5. N-Gram Tagging
+### 1) Unigram Tagging: training()
+```python
+from nltk.corpus import brown
+brown_tagged_sents = brown.tagged_sents(categories='news')
+brown_sents = brown.sents(categories='news')
+unigram_tagger = nltk.UnigramTagger(brown_tagged_sents)
+unigram_tagger.tag(brown_sents[2007])
+```
+```
+[('Various', 'JJ'),
+ ('of', 'IN'),
+ ('the', 'AT'),
+ ('apartments', 'NNS'),
+ ('are', 'BER'),
+ ('of', 'IN'),
+ ('the', 'AT'),
+ ('terrace', 'NN'),
+ ('type', 'NN'),
+ (',', ','),
+ ('being', 'BEG'),
+ ('on', 'IN'),
+ ('the', 'AT'),
+ ('ground', 'NN'),
+ ('floor', 'NN'),
+ ('so', 'QL'),
+ ('that', 'CS'),
+ ('entrance', 'NN'),
+ ('is', 'BEZ'),
+ ('direct', 'JJ'),
+ ('.', '.')]
+```
+```python
+unigram_tagger.evaluate(brown_tagged_sents)
+```
+```
+0.9349006503968017
+```
+
+### 2) Typical Steps of Supervised Learning
+![supervised learning](https://github.com/jionchu/TIL/blob/master/AI/images/supervised_learning.PNG)  
+
+```python
+size = int(len(brown_tagged_sents)*0.9)
+train_sents = brown_tagged_sents[:size]
+test_sents = brown_tagged_sents[size:]
+size
+```
+```
+4160
+```
+```python
+unigram_tagger = nltk.UnigramTagger(train_sents)
+unigram_tagger.evaluate(test_sents)
+```
+```
+0.8121200039868434
+```
+train data와 test data를 구분해야 정확하게 성능을 평가할 수 있음  
+
+### 3) General N-Gram Tagging
+- 위의 unigram tagger는 단어만으로 품사를 판단함. 문맥을 보고 판단하는 N-Gram tagging
+- 앞에 있는 단어들의 품사를 확인
+
+#### ㄱ. Bigram
+```python
+bigram_tagger = nltk.BigramTagger(train_sents)
+bigram_tagger.tag(brown_sents[2007])
+```
+```
+[('Various', 'JJ'),
+ ('of', 'IN'),
+ ('the', 'AT'),
+ ('apartments', 'NNS'),
+ ('are', 'BER'),
+ ('of', 'IN'),
+ ('the', 'AT'),
+ ('terrace', 'NN'),
+ ('type', 'NN'),
+ (',', ','),
+ ('being', 'BEG'),
+ ('on', 'IN'),
+ ('the', 'AT'),
+ ('ground', 'NN'),
+ ('floor', 'NN'),
+ ('so', 'CS'),
+ ('that', 'CS'),
+ ('entrance', 'NN'),
+ ('is', 'BEZ'),
+ ('direct', 'JJ'),
+ ('.', '.')]
+```
+```python
+unseen_sents = brown_sents[4203]
+bigram_tagger.tag(unseen_sents)
+```
+```
+[('The', 'AT'),
+ ('population', 'NN'),
+ ('of', 'IN'),
+ ('the', 'AT'),
+ ('Congo', 'NP'),
+ ('is', 'BEZ'),
+ ('13.5', None),
+ ('million', None),
+ (',', None),
+ ('divided', None),
+ ('into', None),
+ ('at', None),
+ ('least', None),
+ ('seven', None),
+ ('major', None),
+ ('``', None),
+ ('culture', None),
+ ('clusters', None),
+ ("''", None),
+ ('and', None),
+ ('innumerable', None),
+ ('tribes', None),
+ ('speaking', None),
+ ('400', None),
+ ('separate', None),
+ ('dialects', None),
+ ('.', None)]
+```
+```python
+bigram_tagger.evaluate(test_sents)
+```
+```
+0.10206319146815508
+```
+정확도가 확 떨어짐  
+-> bigram을 적용하면 일부 data만 training됨  
+-> unseen data가 너무 많은 것
+
+### 4) Combining Tagger
+bigram(가장 정확한 것)이 처리하지 못하는 것은 unigram이, unigram이 처리하지 못하는 것은 default tagger가 처리함
+```python
+t0 = nltk.DefaultTagger('NN')
+t1 = nltk.UnigramTagger(train_sents, backoff=t0)
+t2 = nltk.BigramTagger(train_sents, backoff=t1)
+t2.evaluate(test_sents)
+```
+```
+0.8452108043456593
+```
+
+### 5) Pickling
+- Storing taggers (지금까지 학습시킨 것을 저장)
+
+- 저장하기
+```python
+from pickle import dump
+output = open('t2.pkl', 'wb')
+dump(t2, output, -1)
+output.close()
+```
+- 불러오기
+```python
+from pickle import load
+input = open('t2.pkl','rb')
+tagger = load(input)
+input.close()
+```
+
+## 6. Transformation-Based Tagging
+### 1) Brill Tagger
+데이터가 많지 않을 때  
+학습 도중 여러 가지 rele을 적용하면서 mistake를 고쳐 나감  
+- (a) Replace NN with VB when the previous word is TO
+- (b) Replace TO with IN when the next tag is NNS
+
