@@ -23,3 +23,37 @@ data.head()
 data.tail()
 ```
 ![iris tail](https://github.com/jionchu/TIL/blob/master/AI/images/iris_tail.PNG)  
+
+## 2. Supervised Learning
+### 1) iris 데이터 분류하기
+```python
+from sklearn import datasets
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# importing the necessary packages
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+
+# downloading the iris dataset, splitting it into train set and validation set
+iris = datasets.load_iris()
+class_names = iris.target_names
+iris_df = pd.DataFrame(iris.data, columns=iris.feature_names)
+iris_df['target']=iris.target
+```
+```python
+# https://medium.com/dataseries/lets-build-your-first-naive-bayes-classifier-with-python-d31a5140e4bc
+X_train, X_test, y_train, y_test = train_test_split(iris_df[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']], iris_df['target'], random_state=0)
+NB = GaussianNB()
+NB.fit(X_train, y_train)
+y_predict = NB.predict(X_test)
+print("Accuracy NB: {:.2f}".format(NB.score(X_test, y_test)))
+```
+```
+Accuracy NB: 1.00
+```
+
+### 2) Bayes' theorem
+![bayes theorem](https://github.com/jionchu/TIL/blob/master/AI/images/bayes_theorem.PNG)  
+- 두 확률 변수의 사전 확률과 사후 확률 사이의 관계를 나타내는 정리
+- 베이즈 확률론 해석에 따르면 베이즈 정리는 사전확률로부터 사후확률을 구할 수 있음
