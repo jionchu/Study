@@ -57,3 +57,72 @@ Accuracy NB: 1.00
 ![bayes theorem](https://github.com/jionchu/TIL/blob/master/AI/images/bayes_theorem.PNG)  
 - 두 확률 변수의 사전 확률과 사후 확률 사이의 관계를 나타내는 정리
 - 베이즈 확률론 해석에 따르면 베이즈 정리는 사전확률로부터 사후확률을 구할 수 있음
+
+## 3. Unsupervised Learning
+### 1) K-means Clustering
+- random하게 중심정 k개를 잡음
+- random한 포인트에서 가장 가까운 점들을 euclidian distance 구해서 가까운 것들끼리 묶음
+- 새로운 그룹들의 새로운 중심점 구함
+- 이 과정을 반복
+
+label이 정해져 있지 않고 그냥 비슷한 것들끼리 묶음
+
+k의 개수, 초기점이 중요함
+
+### 2) iris 데이터 분류
+```python
+from sklearn import datasets
+import pandas as pd
+iris = datasets.load_iris()
+
+labels = pd.DataFrame(iris.target)
+labels.columns=['labels']
+data = pd.DataFrame(iris.data)
+data.columns=['Sepal length','Sepal width','Petal length','Petal width']
+data = pd.concat([data,labels],axis=1)
+feature = data[ ['Sepal length','Sepal width']]
+feature.head()
+```
+```python
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# create model and prediction
+model = KMeans(n_clusters=3, algorithm='auto') # k가 3인 model
+```
+#### algorithm : {"auto","full","elkan"}, default="auto"
+- K-means algorithm to use
+- "full" : The classical EM-style algorithm
+- "elkan"
+  - more efficient on data with well-defined clusters, by using the triangle inequality
+  - 이전 반복에서의 모든 거리정보를 보관하여 불필요한 거리계산을 줄임
+  - 대규모 데이터에서는 추가적인 저장공간을 써서 성능이 저하됨 (n_samples, n_clusters)
+- "auto" chooses "elkan"
+```python
+model.fit(feature) # compute k-means clustering
+predict = pd.DataFrame(model.predict(feature)) # predict the closest cluster each sample in X belongs to
+predict.columns=['predict']
+```
+- model.fit(학습데이터)를 실행하면 학습 데이터를 이용하여 클러스터링을 위한 학습을 시작. 학습 데이터에 맞는 중심점 3개를 추출함
+- 학습된 모델을 가지고 model.predict(데이터)를 수행하면 데이터를 학습된 모델에 맞춰서 다시 grouping하여 어느 클러스터로 grouping 되었는지 라벨 리턴
+- 클러스터의 라벨은 자동으로 0,1,2로 지정됨. 이 순서는 학습할 때마다 임의로 변경될 수 있음
+
+
+```python
+# concatenate labels to df as a new column
+r = pd.concat([feature,predict],axis=1)
+# print(r)
+```
+- 클러스터링된 라벨과 Sepal length, Sepal width를 하나의 데이터 프레인 r에 저장해서 출력
+
+```python
+centers = pd.DataFrame(model.cluster_centers_,columns=['Sepal length','Sepal width'])
+center_x = centers['Sepal length']
+center_y = centers['Sepal width']
+# scatter plot
+plt.scatter(r['Sepal length'],r['Sepal width'],c=r['predict'],alpha=0.5)
+plt.scatter(center_x,center_y,s=50,marker='D',c='r')
+plt.show()
+```
+https://bcho.tistory.com/1203
