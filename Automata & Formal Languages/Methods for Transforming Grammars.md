@@ -36,3 +36,10 @@ terminal에 도달하는 변수 집합에 포함되지 않는 것은 삭제
 2. 유도해나가야 빈 문자열이 나오는 경우
 
 빈 문자열에 영향받는 rule들을 변형한 후 빈 문자열을 삭제해야 함
+
+## 4. Remove All
+- **Step 1**: Remove Nullable Variables
+- **Step 2**: Remove Unit-Productions
+- **Step 3**: Remove Useless Variables
+
+Order is important
