@@ -185,3 +185,145 @@ print(nltk.classify.accuracy(classifier, devtest_set))
 ```
 정확도가 향상됨  
 
+## 2. 영화비평 분류하기 Using NaiveBayesClassifier()
+moview review가 positive인지 negative인지 판단하기
+
+#### ㄱ. data labeling
+```python
+import nltk
+import random
+from nltk.corpus import movie_reviews
+documents = [(list(movie_reviews.words(fileid)), category)
+             for category in movie_reviews.categories() # positive인지 negative인지 labeling
+             for fileid in movie_reviews.fileids(category)]
+random.shuffle(documents)
+documents[0]
+```
+```
+(['robert',
+  'redford',
+  "'",
+  's',
+  'a',
+  'river',
+  'runs',
+  'through',
+  'it',
+  'is',
+  'not',
+  'a',
+  'film',
+  'i',
+  'watch',
+  'often',
+  '.',
+  'it',
+  ...])
+```
+
+#### ㄴ. feature 추출
+```python
+all_words = nltk.FreqDist(w.lower() for w in movie_reviews.words())
+word_features = list(all_words)[:2000] # 가장 많이 사용된 2000개 단어
+word_features[:100]
+```
+```
+['plot',
+ ':',
+ 'two',
+ 'teen',
+ 'couples',
+ 'go',
+ 'to',
+ 'a',
+ 'church',
+ 'party',
+ ',',
+ 'drink',
+ 'and',
+ 'then',
+ 'drive',
+ '.',
+ 'they',
+ 'get',
+ 'into',
+ 'an',
+ 'accident',
+ 'one',
+ 'of',
+ 'the',
+ 'guys',
+ 'dies',
+ 'but',
+ 'his',
+ 'girlfriend',
+ 'continues',
+ 'see',
+ 'him',
+ 'in',
+ 'her',
+ ...]
+```
+```python
+def document_features(document):
+      document_words = set(document)
+      features = {}
+      for word in word_features:
+              features['contains({})'.format(word)] = (word in document_words)
+      return features
+featuresets = [(document_features(d), c) for (d,c) in documents]
+featuresets[1]
+```
+```
+({'contains(plot)': True,
+  'contains(:)': False,
+  'contains(two)': False,
+  'contains(teen)': False,
+  'contains(couples)': False,
+  'contains(go)': False,
+  'contains(to)': True,
+  'contains(a)': True,
+  'contains(church)': False,
+  'contains(party)': True,
+  'contains(,)': True,
+  'contains(drink)': False,
+  ...})
+```
+
+#### ㄷ. classifier train
+```python
+train_set, test_set = featuresets[100:], featuresets[:100]
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+print("Document Classification:", nltk.classify.accuracy(classifier,test_set))
+```
+```
+Document Classification: 0.81
+```
+```python
+classifier.show_most_informative_features(5)
+```
+```
+Most Informative Features
+        contains(justin) = True              neg : pos    =      9.6 : 1.0
+ contains(unimaginative) = True              neg : pos    =      8.3 : 1.0
+     contains(atrocious) = True              neg : pos    =      7.0 : 1.0
+          contains(mena) = True              neg : pos    =      7.0 : 1.0
+        contains(shoddy) = True              neg : pos    =      7.0 : 1.0
+```
+
+### Bag of Words Feature Extraction
+단어가 있는지 없는지만 판단
+
+### Word Embedding
+① 어떤 단어가 많이 쓰였는지?
+- Bag of Words (순서 신경 쓰지 않음)
+- TF-IDF (의미 없는 단어 제외)
+
+② 단어가 어떤 순서로 쓰였는지?
+- ELMo
+- GPT
+
+③ 어떤 단어와 같이 쓰였는지?
+- PMI
+- Word2Vec
+
