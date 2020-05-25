@@ -327,3 +327,202 @@ Most Informative Features
 - PMI
 - Word2Vec
 
+## 3. 품사에 영향을 주는 suffix 활용 Using DecisionTreeClassifier()
+```python
+from nltk.corpus import brown
+suffix_fdist = nltk.FreqDist()
+for word in brown.words():
+        word = word.lower()
+        suffix_fdist[word[-1:]] += 1
+        suffix_fdist[word[-2:]] += 1
+        suffix_fdist[word[-3:]] += 1
+common_suffixes = [suffix for (suffix, count) in suffix_fdist.most_common(100)]
+common_suffixes
+```
+```
+['e',
+ ',',
+ '.',
+ 's',
+ 'd',
+ 't',
+ 'he',
+ 'n',
+ 'a',
+ 'of',
+ 'the',
+ 'y',
+ 'r',
+ 'to',
+ 'in',
+ 'f',
+ 'o',
+ 'ed',
+ 'nd',
+ 'is',
+ ...]
+```
+#### ㄱ. feature 추출
+```python
+def pos_features(word):
+        features = {}
+        for suffix in common_suffixes: # word가 common_suffixes에 속하는지 확인하기
+                features['endswith({})'.format(suffix)] = word.lower().endswith(suffix)
+        return features
+tagged_words = brown.tagged_words(categories='news')
+featuresets = [(pos_features(n), g) for (n,g) in tagged_words]
+featuresets[:10]
+```
+```
+[({'endswith(e)': True,
+   'endswith(,)': False,
+   'endswith(.)': False,
+   'endswith(s)': False,
+   'endswith(d)': False,
+   'endswith(t)': False,
+   'endswith(he)': True,
+   'endswith(n)': False,
+   'endswith(a)': False,
+   'endswith(of)': False,
+   'endswith(the)': True,
+   'endswith(y)': False,
+   'endswith(r)': False,
+   'endswith(to)': False,
+   ...},
+   'AT'),
+   ({'endswith(e)': False,
+   'endswith(,)': False,
+   'endswith(.)': False,
+   'endswith(s)': False,
+   'endswith(d)': False,
+   'endswith(t)': False,
+   'endswith(he)': False,
+   'endswith(n)': True,
+   'endswith(a)': False,
+   'endswith(of)': False,
+   'endswith(the)': False,
+   'endswith(y)': False,
+   ...},
+   'NP-TL')
+   ...
+]
+```
+#### ㄴ. classifier train
+```python
+size = int(len(featuresets) * 0.1)
+train_set, test_set = featuresets[size:], featuresets[:size]
+classifier = nltk.DecisionTreeClassifier.train(train_set)
+print("POS Tagging:", nltk.classify.accuracy(classifier,test_set))
+```
+```
+POS Tagging: 0.62705121829935351
+```
+
+## 4. POS Tagging: exploiting context
+단어의 previous word도 함께 feature로 저장
+
+#### ㄱ. feature 추출
+```python
+def pos_features(sentence, i): 
+    features = {"suffix(1)": sentence[i][-1:],
+                "suffix(2)": sentence[i][-2:],
+                "suffix(3)": sentence[i][-3:]}
+    if i == 0:
+        features["prev-word"] = "<START>"
+    else:
+        features["prev-word"] = sentence[i-1]
+    return features
+
+pos_features(brown.sents()[0], 8) # investigation
+```
+```
+{'suffix(1)': 'n', 'suffix(2)': 'on', 'suffix(3)': 'ion', 'prev-word': 'an'}
+```
+```python
+print(brown.sents()[0])
+```
+```
+['The', 'Fulton', 'County', 'Grand', 'Jury', 'said', 'Friday', 'an', 'investigation', 'of', "Atlanta's", 'recent', 'primary', 'election', 'produced', '``', 'no', 'evidence', "''", 'that', 'any', 'irregularities', 'took', 'place', '.']
+```
+
+#### ㄴ. enumerate
+indexing이 자동으로 됨
+```python
+list(enumerate(brown.sents()[0]))
+```
+```
+[(0, 'The'),
+ (1, 'Fulton'),
+ (2, 'County'),
+ (3, 'Grand'),
+ (4, 'Jury'),
+ (5, 'said'),
+ (6, 'Friday'),
+ (7, 'an'),
+ (8, 'investigation'),
+ (9, 'of'),
+ (10, "Atlanta's"),
+ (11, 'recent'),
+ (12, 'primary'),
+ (13, 'election'),
+ (14, 'produced'),
+ (15, '``'),
+ (16, 'no'),
+ (17, 'evidence'),
+ (18, "''"),
+ (19, 'that'),
+ (20, 'any'),
+ (21, 'irregularities'),
+ (22, 'took'),
+ (23, 'place'),
+ (24, '.')]
+```
+
+#### ㄷ. classifier train
+```python
+tagged_sents = brown.tagged_sents(categories='news')
+featuresets = []
+for tagged_sent in tagged_sents:
+     untagged_sent = nltk.tag.untag(tagged_sent)
+     for i, (word, tag) in enumerate(tagged_sent):
+         featuresets.append( (pos_features(untagged_sent, i), tag) )
+
+size = int(len(featuresets) * 0.1)
+train_set, test_set = featuresets[size:], featuresets[:size]
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+
+nltk.classify.accuracy(classifier, test_set)
+```
+```
+0.7891596220785678
+```
+```python
+list(enumerate(tagged_sents[0]))
+```
+```
+[(0, ('The', 'AT')),
+ (1, ('Fulton', 'NP-TL')),
+ (2, ('County', 'NN-TL')),
+ (3, ('Grand', 'JJ-TL')),
+ (4, ('Jury', 'NN-TL')),
+ (5, ('said', 'VBD')),
+ (6, ('Friday', 'NR')),
+ (7, ('an', 'AT')),
+ (8, ('investigation', 'NN')),
+ (9, ('of', 'IN')),
+ (10, ("Atlanta's", 'NP$')),
+ (11, ('recent', 'JJ')),
+ (12, ('primary', 'NN')),
+ (13, ('election', 'NN')),
+ (14, ('produced', 'VBD')),
+ (15, ('``', '``')),
+ (16, ('no', 'AT')),
+ (17, ('evidence', 'NN')),
+ (18, ("''", "''")),
+ (19, ('that', 'CS')),
+ (20, ('any', 'DTI')),
+ (21, ('irregularities', 'NNS')),
+ (22, ('took', 'VBD')),
+ (23, ('place', 'NN')),
+ (24, ('.', '.'))]
+```
