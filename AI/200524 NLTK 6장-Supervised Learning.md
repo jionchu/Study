@@ -526,3 +526,146 @@ list(enumerate(tagged_sents[0]))
  (23, ('place', 'NN')),
  (24, ('.', '.'))]
 ```
+
+## 5. Sentence Segmentation Using NaiveBayesClassifier
+마침표나 물음표가 나왔을 때 그것이 문장을 끝내는 것인지 아닌지 판단해야 함 → 중요한 문제!  
+```python
+def segment_sentences(words):
+    start = 0
+    sents = []
+    for i, word in enumerate(words):
+        if word in '.?!' and classifier.classify(punct_features(words, i)) == True:
+            sents.append(words[start:i+1])
+            start = i+1
+    if start < len(words):
+        sents.append(words[start:])
+    return sents
+```
+```python
+sents = nltk.corpus.treebank_raw.sents()
+sents[:10]
+```
+```
+[['.', 'START'],
+ ['Pierre',
+  'Vinken',
+  ',',
+  '61',
+  'years',
+  'old',
+  ',',
+  'will',
+  'join',
+  'the',
+  'board',
+  'as',
+  'a',
+  'nonexecutive',
+  'director',
+  'Nov',
+  '.',
+  '29',
+  '.'],
+ ['Mr',
+  '.',
+  'Vinken',
+  'is',
+  'chairman',
+  'of',
+  'Elsevier',
+  'N',
+  '.',
+  'V',
+  '.,',
+  'the',
+  'Dutch',
+  'publishing',
+  'group',
+  '.'],
+ ['.', 'START'],
+ ...]
+```
+#### ㄱ. 경게선 탐색
+```python
+tokens = []
+boundaries = set()
+offset = 0
+for sent in sents: # 각각의 sentence에 대해 offset 계산 (문장 경계선 찾기)
+        tokens.extend(sent)
+        offset += len(sent)
+        boundaries.add(offset-1)
+
+boundaries
+```
+```
+{1,
+ 90116,
+ 16389,
+ 40968,
+ 81929,
+ 24587,
+ 16396,
+ 65548,
+ 73741,
+ 8207,
+ 32784,
+ 81931,
+ 90128,
+ 98315,
+ 20,
+ ...}
+```
+#### ㄴ. feature 추출
+```python
+def punct_features(tokens, i): # 문장 경계선 살펴보기
+        return {'next-word-capitalized': tokens[i+1][0].isupper(), # 문장 경계선 다음 token (별 의미 없음)
+                'prev-word': tokens[i-1].lower(), # 문장 경계선 이전 token
+                'punct': tokens[i], # 현재 token
+                'prev-word-is-one-char': len(tokens[i-1]) == 1} # 문장 경계선이 이전 token이 하나의 단어인지
+
+# boundary로 featuresets 구축
+featuresets = [(punct_features(tokens, i), (i in boundaries))
+        for i in range(1, len(tokens)-1)
+                if tokens[i] in '.?!']
+
+featuresets
+```
+```
+[({'next-word-capitalized': False,
+   'prev-word': 'nov',
+   'punct': '.',
+   'prev-word-is-one-char': False},
+  False),
+ ({'next-word-capitalized': True,
+   'prev-word': '29',
+   'punct': '.',
+   'prev-word-is-one-char': False},
+  True),
+ ({'next-word-capitalized': True,
+   'prev-word': 'mr',
+   'punct': '.',
+   'prev-word-is-one-char': False},
+  False),
+ ({'next-word-capitalized': True,
+   'prev-word': 'n',
+   'punct': '.',
+   'prev-word-is-one-char': True},
+  False),
+ ({'next-word-capitalized': False,
+   'prev-word': 'group',
+   'punct': '.',
+   'prev-word-is-one-char': False},
+  True),
+  ...]
+```
+#### ㄷ. classifier train
+```python
+size = int(len(featuresets) * 0.1)
+train_set, test_set = featuresets[size:], featuresets[:size]
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+nltk.classify.accuracy(classifier, test_set)
+print("Sentence Segmentation:", nltk.classify.accuracy(classifier, test_set))
+```
+```
+Sentence Segmentation: 0.936026936026936
+```
