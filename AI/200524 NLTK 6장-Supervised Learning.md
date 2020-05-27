@@ -669,3 +669,85 @@ print("Sentence Segmentation:", nltk.classify.accuracy(classifier, test_set))
 ```
 Sentence Segmentation: 0.936026936026936
 ```
+
+## 6. 화행 (Speech Act) 분석하기 Using NaiveBayesClassifier
+
+- **화행**: 발화가 질문, 명령, 요청, 감사 등 여러 행위 중 어떤 것에 속하는지에 대한 것
+
+```python
+posts = nltk.corpus.nps_chat.xml_posts()[:10000]
+def dialogue_act_features(post):
+        features = {}
+        for word in nltk.word_tokenize(post):
+                features['contains({})'.format(word.lower())] = True
+        return features
+featuresets = [(dialogue_act_features(post.text), post.get('class')) for post in posts]
+
+featuresets[:5]
+```
+```
+[({'contains(now)': True,
+   'contains(im)': True,
+   'contains(left)': True,
+   'contains(with)': True,
+   'contains(this)': True,
+   'contains(gay)': True,
+   'contains(name)': True},
+  'Statement'),
+ ({'contains(:)': True, 'contains(p)': True}, 'Emotion'),
+ ({'contains(part)': True}, 'System'),
+ ({'contains(hey)': True, 'contains(everyone)': True}, 'Greet'),
+ ({'contains(ah)': True, 'contains(well)': True}, 'Statement')]
+```
+
+```python
+size = int(len(featuresets) * 0.1)
+train_set, test_set = featuresets[size:], featuresets[:size]
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+print("Dialog Act Type:", nltk.classify.accuracy(classifier, test_set))
+```
+```
+Dialog Act Type: 0.668
+```
+
+## 7. Recognizing Textual Entailment (RTE)
+- the task of determining whether a given piece of text T entails another text called the "hypothesis"
+
+```python
+rtepairs = nltk.corpus.rte.pairs(['rte3_dev.xml'])
+def rte_features(rtepair):
+    extractor = nltk.RTEFeatureExtractor(rtepair)
+    features = {}
+    features['word_overlap'] = len(extractor.overlap('word'))
+    features['word_hyp_extra'] = len(extractor.hyp_extra('word'))
+    features['ne_overlap'] = len(extractor.overlap('ne'))
+    features['ne_hyp_extra'] = len(extractor.hyp_extra('ne'))
+    return features
+featuresets = [(rte_features(rtepair), rtepair.value) for rtepair in rtepairs]
+```
+```python
+len(featuresets), type(featuresets)
+featuresets[:5]
+```
+```
+[({'word_overlap': 2, 'word_hyp_extra': 0, 'ne_overlap': 1, 'ne_hyp_extra': 1},
+  1),
+ ({'word_overlap': 1, 'word_hyp_extra': 2, 'ne_overlap': 2, 'ne_hyp_extra': 0},
+  0),
+ ({'word_overlap': 1, 'word_hyp_extra': 1, 'ne_overlap': 5, 'ne_hyp_extra': 1},
+  0),
+ ({'word_overlap': 2, 'word_hyp_extra': 1, 'ne_overlap': 3, 'ne_hyp_extra': 1},
+  1),
+ ({'word_overlap': 3, 'word_hyp_extra': 1, 'ne_overlap': 0, 'ne_hyp_extra': 1},
+  1)]
+```
+
+```python
+size = int(len(featuresets) * 0.1)
+train_set, test_set = featuresets[size:], featuresets[:size]
+classifier = nltk.NaiveBayesClassifier.train(train_set)
+print("RTE Recognition:", nltk.classify.accuracy(classifier, test_set))
+```
+```
+RTE Recognition: 0.4625
+```
