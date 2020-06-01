@@ -49,3 +49,66 @@ A multiplexer (MUX) circuit has
 
 ### 2) 3-input XOR
 ![3-input xor](https://github.com/jionchu/TIL/blob/master/Digital%20Logic%20Design/images/mux_3-input_xor.PNG)  
+
+## 4. Shannon's expansion theorem
+여러 개의 input이 있을 때, input 중 하나의 값으로 묶어서 식을 정리할 수 있음  
+
+### 1) example 1
+|x|y|z|f|
+|---|---|---|---|
+|0|0|0|0|
+|0|0|1|0|
+|0|1|0|0|
+|0|1|1|1|
+|1|0|0|0|
+|1|0|1|1|
+|1|1|0|1|
+|1|1|1|1|
+
+|x|f|
+|---|:---:|
+|0|yz|
+|1|y+z|
+
+f = x'(yz) + x(y + z)
+
+### 2) example 2
+|x|y|z|f|
+|---|---|---|---|
+|0|0|0|0|
+|0|0|1|1|
+|0|1|0|0|
+|0|1|1|1|
+|1|0|0|0|
+|1|0|1|1|
+|1|1|0|1|
+|1|1|1|1|
+
+|x|f|
+|---|:---:|
+|0|z|
+|1|y+z|
+
+f = x'(z) + x(y + z)
+
+### 3) example 3
+|x|y|z|f|
+|---|---|---|---|
+|0|0|0|1|
+|0|0|1|1|
+|0|1|0|0|
+|0|1|1|1|
+|1|0|0|1|
+|1|0|1|1|
+|1|1|0|0|
+|1|1|1|0|
+
+f = x'y'z' + x'y'z + x'yz + xy'z' + xy'z  
+
+#### ㄱ. choose x as the expansion variable
+⇒ f = x'(y'z' + y'z + yz) + x(y'z' + y'z)  
+⇒ f = x'(y' + z) + x(y')  
+
+#### ㄴ. choose z as the expansion variable
+⇒ f = z'(x'y' + xy) + z(x'y' + x'y + xy')  
+⇒ f = z'(y') + z'((xy)')  
