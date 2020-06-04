@@ -58,3 +58,25 @@
 
 - y0 = w0 + w1, y1 = w2 + w3
 - z = w0 + w1 + w2 + w3
+
+## 4. Code Converter
+- convert from one type of nput encoding to another type of output encoding
+- ex) 3-to-8 decoder converts binary number → one-hot encoding
+
+### 1) BCD-to-7-segment decoder
+- convert a BCD digit into 7 signals
+
+|w3|w2|w1|w0|a|b|c|d|e|f|g|
+|---|---|---|---|---|---|---|---|---|---|
+|0|0|0|0|1|1|1|1|1|1|0|
+|0|0|0|1|1|0|1|1|0|0|0|
+|0|0|1|0|1|1|0|1|1|0|1|
+|0|0|1|1|1|1|1|1|0|0|1|
+|0|1|0|0|0|1|1|0|0|1|1|
+|0|1|0|1|1|0|1|1|0|1|1|
+|0|1|1|0|1|0|1|1|1|1|1|
+|0|1|1|1|1|1|1|0|0|0|0|
+|1|0|0|0|1|1|1|1|1|1|1|
+|1|0|0|1|1|1|1|1|0|1|1|
+
+![bcd-to-7-segment decoder](https://github.com/jionchu/TIL/blob/master/Digital%20Logic%20Design/images/bcd-to-7-segment_decoder.PNG)  
