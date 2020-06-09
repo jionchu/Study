@@ -26,3 +26,37 @@ F → a
 CFL (Context-Free Language) L에 대해
 - non-ambiguous 문법 G가 존재한다면 L은 **unambiguous**
 - G가 존재하지 않는다면 L은 **inherently ambiguous** (non-ambiguous grammar로 고치지 못함)
+
+## 2. Parsing
+### 1) Parser
+Program --input--> Compiler --output--> Machine code  
+
+- Compiler의 구성은 다음과 같다.
+
+Lexical analyzer -> Parser  
+=> Program --input--> Lexical analyzer -> Parser --output--> Machine code  
+
+- Parser knows the grammar of the programming language
+- Parser finds the derivation fo a particular input
+
+### 2) Parsing
+- L(G)에 속하는 w에 대해 일련의 생성규칙을 발견하는 과정
+
+## 3. Programming Language
+- Formal Language: one of the most important uses
+- Regular Language: recognition of certain simple patterns. ex) 변수 이름이 숫자로 시작하지 않게 확인
+- Context-Free Languages: more complicated aspects. ex) 괄호 쌍 확인
+
+### 1) Context-Free Grammar & PL
+comvention for specifying grammars for PL: **Backus-Naur Form** (Context-Free Grammar 표현 방식) 
+
+#### ㄱ. example 1
+\<expression> ::= \<term> | \<expression> + \<term>  
+\<term> ::= \<factor> | \<term> * \<factor>  
+
+S → aA => \<S> ::= a\<A>
+
+#### ㄴ. example 2
+**s-grammar**: easily/efficiently parsed (due to **keywords**)  
+\<if_stmt> ::= if \<expression> \<then_cause> \<else_cause>  
+→ **LL/LR grammars**
