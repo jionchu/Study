@@ -42,6 +42,32 @@ Lexical analyzer -> Parser
 ### 2) Parsing
 - L(G)에 속하는 w에 대해 일련의 생성규칙을 발견하는 과정
 
+### 3) s-grammar (simple gramamr)
+- faster algorithms for specialized grammars
+- In the exhaustive search parsing, there is only one choice in each phase
+- Time for a phase: 1
+- Total time for parsing string: W (각 심볼에 대해 1번만 탐색하면 되므로 문자열의 길이만큼 시간이 걸림)
+
+A → ax  
+pair (A, a) appears once
+
+#### ㄱ. S-grammar example
+- S → aS
+- S → bSS
+- S → c
+
+Each string has a **unique** derivation  
+S => aS => abSS => abcS => abcc
+
+#### ㄴ. not S-grammar example
+- S → aS | bSS | aSS | c
+
+pair (S, a) appears **twice**
+- S → aS
+- S → aSS
+### 4) general context-free grammars
+- There exists a parsing algorithm that parses a string W in time |W|^3
+
 ## 3. Programming Language
 - Formal Language: one of the most important uses
 - Regular Language: recognition of certain simple patterns. ex) 변수 이름이 숫자로 시작하지 않게 확인
