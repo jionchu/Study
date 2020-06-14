@@ -1,6 +1,7 @@
 # Digital Logic Design
 
 - Introduction to Logic Circuits
+  - [Variables, truth tables](https://github.com/jionchu/TIL/blob/master/Digital%20Logic%20Design/Variables,%20truth%20tables.md)
 - Optimized Implementation of Logic Functions
 - Implementation Technology
 - Optimized Implementation of Logic Functions
