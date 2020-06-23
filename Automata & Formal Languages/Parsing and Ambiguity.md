@@ -74,7 +74,7 @@ string w를 찾기 위한 total time은
 - Time for a phase: 1
 - Total time for parsing string: |W| (각 심볼에 대해 1번만 탐색하면 되므로 문자열의 길이만큼 시간이 걸림)
 
-A → ax  
+A → ax (x의 길이는 다양할 수 있으나 symbol은 반드시 가장 왼쪽에 와야 함, x는 변수들로만 이루어짐)  
 pair (A, a) appears once
 
 #### ㄱ. S-grammar example

@@ -2,21 +2,32 @@
 
 ## 1. Chomsky Normal Form
 변수가 terminal 혹은 두 개의 변수로 mapping 되는 것
-- A → BC
-- A → a
+1. A → BC
+2. A → a
+- Chomsky normal forms are **good for parsing and proving theorems**
+- It is very **easy** to find the Chomsky normal form of any context-free grammar
+- 모든 context free grammar는 동치인 chomsky normal form을 찾을 수 있음
 
-- Chomsky normal forms are good for parsing and proving theorems
-- It is very easy to find the Chomsky normal form of any context-free grammar
+### Steps
+1. *First remove*
+  - Nullable variables
+  - Unit productions
+2. *For every symbol a*
+  - symbol을 다 변수로 만든다.
+  - symbol 하나만 있는 경우 제외 ex) A → a
+  - symbol이 여러개인 경우 각각의 symbol로 분리한다.
+3. *Replace any production A → C1C2...Cn*
+  - 변수가 3개 이상인 경우 2개만 남도록 분리한다.
 
 ## 2. Greibach Normal Form
-왼쪽에 symbol이 나오고 오른쪽에 변수가 나오는 것 (변수 개수 상관 없음)
-- A → aV1V2...Vk
+왼쪽에 symbol이 1개 나오고 오른쪽에 변수가 나오는 것 (변수 개수 상관 없음)
+- A → aV1V2...Vk (k ≥ 0)
 
 제일 왼쪽 symbol 이외의 symbol들은 전부 변수로 대체  
 일반화시키기 어려움
 
-- very good for parsing
-- It is hard to find the Greibach normal form of any context-free grammar
+- very **good for parsing**
+- It is **hard** to find the Greibach normal form of any context-free grammar
 
 ## 3. Membership Algorithm
 문자열이 grammar로 유도될 수 있는지 찾는 알고리즘
