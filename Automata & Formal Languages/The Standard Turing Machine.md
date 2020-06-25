@@ -1,4 +1,6 @@
 # The Standard Turing Machine
+- 현재 우리가 사용하고 있는 컴퓨터의 추상 모델
+- Turing machine이 해결하지 못하는 것은 현재 컴퓨터도 해결할 수 없음
 
 ## 1. Definition
 Context-Free Languages에서 사용하는 stack도 부족 → 유연한 저장구조가 필요함  
@@ -15,12 +17,12 @@ Context-Free Languages에서 사용하는 stack도 부족 → 유연한 저장�
 ### 2) States & Transtions
 a → b,L  
 - a: Read
-- b: Write
+- b: Write (a가 있던 위치에 write)
 - L: Move Left / R: Move Right
 
 ### 3) Determinism
 - 어떠한 symbol을 읽었을 때 갈 수 있는 길은 단 1개뿐
-- lambda transition도 존재하지 않음 (blank를 읽는 것과는 다름)
+- λ-transition도 존재하지 않음 (blank를 읽는 것과는 다름)
 
 ### 4) Partial Transition Functionn
 어떠한 state에서 모든 input string symbol들에 대한 transition이 정해져 있어야 하는 것은 아님  
