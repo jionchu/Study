@@ -8,4 +8,37 @@
 
 ```java
 var count: Int = 10
+count = 15
 ```
+```java
+val languageName: String = "Kotlin"
+```
+
+### Type inference
+- 변수 초기 값을 할당할 때 Kotlin 컴파일러는 할당된 값의 유형을 기반으로 유형을 추론할 수 있음
+- Kotlin은 정적으로 입력되는 언어이므로 컴파일 시에 유형이 결정되고 절대 변경되지 않음
+- 간결성과 유형 안전성을 보장함
+
+```java
+val languageName = "Kotlin"
+val upperCaseName = languageName.toUpperCase()
+
+// Fails to compile
+languageName.inc()
+```
+String class의 함수가 아닌 것을 호출할 수 없음 (inc()는 Int 연산자 함수)
+
+### Null safety
+- Kotlin 변수는 null 값을 가질 수 없음
+```java
+// Fails to compile
+val languageName: String = null
+```
+null 값을 포함하는 변수는 *nullable* 유형이어야 함. `?`을 변수 type의 접미사로 지정하여 변수를 nullable로 지정할 수 있음
+
+```java
+val languageName: String? = null
+```
+nullable 변수는 신중하게 처리하지 않으면 NullPointerException이 발생할 수 있다.  
+
+Kotlin은 nullable 변수로 안전하게 작업하기 위한 많은 메커니즘을 제공한다.
