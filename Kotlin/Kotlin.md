@@ -42,3 +42,47 @@ val languageName: String? = null
 nullable 변수는 신중하게 처리하지 않으면 NullPointerException이 발생할 수 있다.  
 
 Kotlin은 nullable 변수로 안전하게 작업하기 위한 많은 메커니즘을 제공한다.
+
+## 2. 조건문
+### if-else문
+```java
+if (count == 42) {
+    println("I have the answer.")
+} else if (count > 35) {
+    println("The answer is close.")
+} else {
+    println("The answer eludes me.")
+}
+```
+반복을 피하기 위해 다음과 같이 작성할 수 있음
+```java
+val answerString: String = if (count == 42) {
+    "I have the answer."
+} else if (count > 35) {
+    "The answer is close."
+} else {
+    "The answer eludes me."
+}
+
+println(answerString)
+```
+### when
+각 분기는 조건, 화살표(`->`) 및 결과로 표시됨
+```java
+val answerString = when {
+    count == 42 -> "I have the answer."
+    count > 35 -> "The answer is close."
+    else -> "The answer eludes me."
+}
+println(answerString)
+```
+
+### smart casting
+safe-call operator나 not-null assertion을 사용하는 대신 조건문을 사용하여 변수에 null 값이 있는지 확인할 수 있다.
+```java
+val languageName: String? = null
+if (languageName != null) {
+    // No need to write languageName?.toUpperCase()
+    println(languageName.toUpperCase())
+}
+```
