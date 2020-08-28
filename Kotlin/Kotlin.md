@@ -86,3 +86,35 @@ if (languageName != null) {
     println(languageName.toUpperCase())
 }
 ```
+
+## 3. 함수
+`fun` 키워드 뒤에 함수 이름이 오도록 한다. 그 다음 함수에 사용되는 입력 유형을 (있는 경우) 정의하고 함수에서 반환하는 출력 유형을 선언한다. 함수의 본문에서는 함수를 호출할 때 호출되는 표현식을 정의한다.
+```java
+fun generateAnswerString(): String {
+    val answerString = if (count == 42) {
+        "I have the answer."
+    } else {
+        "The answer eludes me."
+    }
+
+    return answerString
+}
+```
+```java
+val answerString = generateAnswerString()
+```
+아래와 같이 parameter를 입력으로 사용할 수 있다.
+```java
+fun generateAnswerString(countThreshold: Int): String {
+    val answerString = if (count > countThreshold) {
+        "I have the answer."
+    } else {
+        "The answer eludes me."
+    }
+
+    return answerString
+}
+```
+```java
+val answerString = generateAnswerString(42)
+```
