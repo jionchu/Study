@@ -118,3 +118,60 @@ fun generateAnswerString(countThreshold: Int): String {
 ```java
 val answerString = generateAnswerString(42)
 ```
+
+### 함수 선언 단순화
+함수에 포함된 if-else 표현식의 결과를 직접 반환하여 로컬 변수 선언을 건너뛸 수 있다.
+```java
+fun generateAnswerString(countThreshold: Int): String {
+    return if (count > countThreshold) {
+        "I have the answer."
+    } else {
+        "The answer eludes me."
+    }
+}
+```
+반환 키워드를 할당 연산자로 바꿀 수도 있다.
+```java
+fun generateAnswerString(countThreshold: Int): String = if (count > countThreshold) {
+    "I have the answer."
+} else {
+    "The answer eludes me."
+}
+```
+
+### 익명 함수
+모든 함수에 이름이 필요하지는 않다. 일부 함수는 입력과 출력에 의해 더 직접적으로 식별된다.
+```java
+val stringLengthFunc: (String) -> Int = { input ->
+    input.length
+}
+```
+위 예에서 `stringLengthFunc`는 `String`을 입력으로 사용하고 `String` 입력 길이를 `Int` 유형의 출력으로 반환하는 익명 함수 참조를 포함한다. 따라서 함수의 유형은 `(String) -> Int`로 표시된다. 하지만 이 코드는 함수를 호출하지 않는다. 함수의 결과를 가져오려면 이름이 지정된 함수처럼 호출해야 한다. 아래처럼 `stringLengthFunc`를 호출할 때 `String`을 input으로 넣어야 한다.
+```java
+val stringLengthFunc: (String) -> Int = { input ->
+    input.length
+}
+
+val stringLength: Int = stringLengthFunc("Android")
+```
+
+### 고차(Higher-order) 함수
+함수는 다른 함수를 인수로 취할 수 있다. 다른 함수를 인수로 사용하는 함수를 **고차 함수**라고 한다. 자바에서 콜백 인터페이스를 사용할 때와 동일한 방식으로 component 간에 통신하는 데 유용하다.
+
+```java
+fun stringMapper(str: String, mapper: (String) -> Int): Int {
+    // Invoke function
+    return mapper(str)
+}
+```
+```java
+stringMapper("Android", { input ->
+    input.length
+})
+```
+익명 함수가 함수에 정의된 마지막 매개변수인 경우 괄호 밖에서 함수를 전달할 수 있다.
+```java
+stringMapper("Android") { input ->
+    input.length
+}
+```
