@@ -175,3 +175,54 @@ stringMapper("Android") { input ->
     input.length
 }
 ```
+
+## 4. 클래스
+`class` 키워드를 사용하여 클래스를 정의할 수 있다.
+```java
+class Car
+```
+
+### 속성
+getter, setter 및 backing 필드를 포함할 수 있는 클래스 수준 변수이다. 아래 예와 같이 자동차를 운전하려면 바퀴가 필요하므로 `Wheel` 객체 목록을 `Car`의 속성으로 추가할 수 있다.
+```java
+class Car {
+    val wheels = listOf<Wheel>()
+}
+```
+`wheels`는 `public val`이다. 즉 `Car` 클래스 외부에서 `wheels`에 접근할 수는 있지만 재할당할 수는 없다. `Car`의 인스턴스를 가져오려면 먼저 생성자를 호출해야 한다.
+```java
+val car = Car() // construct a Car
+val wheels = car.wheels // retrieve the wheels value from the Car
+```
+바퀴를 맞춤설정하려면 클래스 속성을 초기화하는 맞춤 생성자를 정의한다.
+```java
+class Car(val wheels: List<Wheel>)
+```
+위 예에서 클래스 생성자는 `List<Wheel>`을 생성자 인수로 취하고 인수를 사용하여 `wheels` 속성을 초기화한다.
+
+### 클래스 함수 및 캡슐화
+클래스는 함수를 사용하여 동작을 모델링한다. 함수는 상태를 수정할 수 있으므로 노출하려는 데이터만 노출할 수 있다.
+
+다음 예에서 `doorLock` 속성은 `Car` 클래스 외부의 모든 항목에서 비공개로 유지된다. 자동차를 잠금 해제하려면 유효한 키를 전달하는 `unlockDoor()` 함수를 호출해야 한다.
+```java
+class Car(val wheels: List<Wheel>) {
+    private val doorLock: DoorLock = ...
+    
+    fun unlockDoor(key: Key): Boolean {
+        // Return true if key is valid for door lock, false otherwise
+    }
+}
+```
+속성을 참조하는 방법을 맞춤설정하려면 getter와 setter를 custom하면 된다.
+```java
+class Car(val wheels: List<Wheel>) {
+    private val doorLock: DoorLock = ...
+    
+    var gallonsOfFuelInTank: Int = 15
+        private set // the setter is private and has the default implementation
+    
+    fun unlockDoor(key: Key): Boolean {
+        // Return true if key is valid for door lock, false otherwise
+    }
+}
+```
