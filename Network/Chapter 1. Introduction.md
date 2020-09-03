@@ -44,3 +44,26 @@
 #### network protocols:
 - machines rather than humans
 - all communication activity in Internet governed by protocols
+
+## 1.2 network edge
+- end systems, access networks, links
+
+### 1) A closer look at network structure
+- **network adge**
+  - hosts: clients, servers
+  - servers often in data centers
+- **access networks**, physical media
+  - wired, wireless communication links
+- **network core**
+  - interconnected routers
+  - network of networks
+
+### 2) Access networks and physical media
+Q: How to connect end systems to edge router?
+- residential access nets
+- institutional access networks (=home network) (school, company)
+- mobile access networks
+
+keep in mind
+- bandwidth (bits per second) of access networks
+- shared or dedicated
