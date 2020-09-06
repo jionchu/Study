@@ -67,3 +67,20 @@ Q: How to connect end systems to edge router?
 keep in mind
 - bandwidth (bits per second) of access networks
 - shared or dedicated
+
+## Quiz
+1. 네트워크 성능을 측정하는 세 가지 파라미터는?  
+\- loss, delay, throughput
+2. Communication link의 용량을 의미하는 transmission rate의 단위는?  
+\- bps(bits per second)
+3. Access network이란 인터넷 호스트(client,server)를 core network의 edge 라우터로 연결해주는 네트워크를 말한다. 대표적인 access network 3가지는?  
+\- mobile network, home network, institutional network
+4. ISP stands for what?  
+\- Internet Service Provider
+5. 프로토콜을 정의하시오.  
+\- format, order of messages sent and received among network entities, and actions taken on message transmission, receipt
+6. 인터넷관련 프로토콜을 정의하는 기관은?
+그 기관에서 만들어진 문서이름을 무엇이라고하나?  
+\- IETF / RFC
+7. "서버호스트는 core network 라우터에 직접 연결되어있다." true? false?  
+\- false. access network router를 통해 연결되어 있음
