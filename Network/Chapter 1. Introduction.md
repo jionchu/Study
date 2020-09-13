@@ -86,6 +86,18 @@ destination address는 packet의 header에 들어있음
 
 **end-end delay** = 2L/R (propagation delay를 0으로 가정했을 때)
 
+### 2) circuit switching
+- dedicated resources: no sharing
+- 전통적인 telephone network에서 사용함
+
+### 3) Packet switching vs Circuit switching
+- No Call set-up, simpler / Call set-up
+- full link rate
+- Packet delay or loss 발생 / Guaranteed service
+- Queueing delay / Call set-up delay (통신 시작하기 전)
+- Packet switching에서 더 많은 사용자가 네트워크를 사용할 수 있음
+- Intermittent, bursty data에 좋음 / guaranteed bandwidth를 필요로 하는 application에 좋음
+
 ## Quiz
 1. 네트워크 성능을 측정하는 세 가지 파라미터는?  
 \- loss, delay, throughput
