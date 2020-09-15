@@ -115,17 +115,25 @@ destination address는 packet의 header에 들어있음
 7. "서버호스트는 core network 라우터에 직접 연결되어있다." true? false?  
 \- false. access network router를 통해 연결되어 있음
 8. 다음 각 문장의 참/거짓을 가리시오.
-\- xDSL(Digital Subscriber Line)은 구리전화선을 이용하여 인터넷 연결을 제공한다.  
-\- ADLS 사용자는 전화국에서 가까울수록 사용 데이터용량이 더 크다.  
-\- HFC 기술은 케이블 TV 서비스가 제공되는 지역에서만 가능하다.  
-\- Packet switching과 circuit switching은 인터넷의 edge network에서 사용되는 기술이다.  
-\- 라우터는 routing과 forwarding을 수행한다. 이 중 어떤 포트로 수신된 패킷을 또 다른 포트로 switching하는 행위는 routing에 해당한다.  
-\- Packet switching 라우터에서 발생하는 queueing delay는 라우터의 input buffer에서 발생한다. 
-\- 2020년 현재 서울의 대부분 가정집은 ADSL 기술을 사용하여 인터넷에 접속하고 있다. 
+\- xDSL(Digital Subscriber Line)은 구리전화선을 이용하여 인터넷 연결을 제공한다. : 참  
+\- ADLS 사용자는 전화국에서 가까울수록 사용 데이터용량이 더 크다. : 거짓 (속도가 빨라짐)  
+\- HFC 기술은 케이블 TV 서비스가 제공되는 지역에서만 가능하다. : 참  
+\- Packet switching과 circuit switching은 인터넷의 edge network에서 사용되는 기술이다. : 거짓 (Core network에서 사용하는 기술)  
+\- 라우터는 routing과 forwarding을 수행한다. 이 중 어떤 포트로 수신된 패킷을 또 다른 포트로 switching하는 행위는 routing에 해당한다. : 거짓 (forwarding)  
+\- Packet switching 라우터에서 발생하는 queueing delay는 라우터의 input buffer에서 발생한다. : 거짓 (output buffer에서 발생) 
+\- 2020년 현재 서울의 대부분 가정집은 ADSL 기술을 사용하여 인터넷에 접속하고 있다. : 거짓 (VDSL, FTTH 기술 사용) 
 9. 집까지 fiber optic 케이블을  설치하여 residual access network 속도를 높인 기술을 무엇이라고 하는가?  
-10. Packet switching에서 resource(link BW) reservation을 하지 않기때문에 발생하는 delay는?   
-11. Circuit switching에는 있으나 packet switching에는 없는 delay는? 
-12. L-bit packet을 R bps 링크에 전송할때 transmission delay는? 
-13. Packet switching을 지원하는 network 디바이스 (라우터)의 기본동작은 store-and-forward이다.  Store를 하는 이유는? (즉, 라우터가 L bit가 모두 들어올때까지 기다린 후 처리하는 이유는?)  
+\- FTTH
+10. Packet switching에서 resource(link BW) reservation을 하지 않기때문에 발생하는 delay는?  
+\- Queueing delay 
+11. Circuit switching에는 있으나 packet switching에는 없는 delay는?  
+\- Call set-up delay
+12. L-bit packet을 R bps 링크에 전송할때 transmission delay는?  
+\- L/R sec
+13. Packet switching을 지원하는 network 디바이스 (라우터)의 기본동작은 store-and-forward이다. Store를 하는 이유는? (즉, 라우터가 L bit가 모두 들어올때까지 기다린 후 처리하는 이유는?)  
+\- packet switching에서는 한 packet 단위로 움직이기 때문에 하나의 packet이 전부 들어올 때까지 기다려야 함
 14. Packet switching에서 message를 보내고자하는 호스트가 그 message를 작은 크기를 packet으로 나눠전송하는 이유 두가지는 무엇인가?  
+\- parallel delivery가 가능하여 edge-edge delay를 줄일 수 있음  
+\- shared media에서 multiplexing을 통해 여러 user간의 메시지를 동시에 전송할 수 있음
 15. Sending host와 receving host 사이에 두개의 라우터가 있다고 하자. (총 3개의 링크) 각 링크의 bandwidth는 모두 R bps이다. 이때 L-bit packet 하나의 end-to-end delay는 몇초 인가? (하나의 packet만 전송된다고 가정하며 transmission delay만 고려.)  
+\- 3*L/R
