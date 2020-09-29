@@ -1,13 +1,15 @@
 # Chapter 1. Introduction
 
 ### overview
-- what's the Internet?
-- what's a protocol?
+- 인터넷과 프로토콜
 - **network edge**: hosts, access net, physical media
 - **network core**: packet/circuit switching, Internet structure
 - performance: **loss**, **delay**, **throughput**
+- security
+- protocol layers, service models
+- history
 
-## 1.1 what is the Internet?
+## 1.1 인터넷이란 무엇인가?
 ### 1) "nuts and bolts" view
 - 수많은 연결된 컴퓨팅 장치들
   - hosts = end systems (PC: client host / server: server host)
@@ -97,6 +99,60 @@ destination address는 packet의 header에 들어있음
 - Queueing delay / Call set-up delay (통신 시작하기 전)
 - Packet switching에서 더 많은 사용자가 네트워크를 사용할 수 있음
 - Intermittent, bursty data에 좋음 / guaranteed bandwidth를 필요로 하는 application에 좋음
+
+## 1.4 delay, loss, throughput in networks
+
+왜 delay와 loss가 발생하는가?
+- packet이 router buffer에 도착하는 속도가 output link의 capacity보다 빠르면 packet이 queue된 상태에서 차례를 기다리면서 delay가 발생함
+- buffer에 사용가능한(available) 자리가 없으면 도착한 packet들은 **loss**됨
+  - lost packet은 이전 노드 혹은 source end system에서 다시 전송할 수도 있음
+
+### 1) 네트워크에서 발생하는 delay 종류
+- **processing delay** : 라우터가 packet header를 처리하여 packet의 다음 목적지를 결정하는 데 걸리는 시간
+  - bit error 확인
+  - output link 결정
+  - 일반적으로 msec 단위 → 속도가 빨라서 상관 없음
+  - ① routing table lookup
+  - ② switching from input port to output port
+- **queueing delay** : 먼저 들어온 packet이 처리되는 동안 대기하는 시간
+  - output link에서 transmission되기를 기다리는 시간
+  - router의 congestion level (=traffic intensity)에 달려있음
+- **transmission delay** : packet의 모든 bit들을 링크로 내보내는 시간 (케이블의 성능과 관련)
+  - L: packet length (bits)
+  - R: link bandwidth (bps)
+  - transmission delay = L/R
+- **propagation delay** : 신호가 목적지까지 도달하는 시간
+  - d: length of physical link
+  - s: propagation speed
+  - propagation delay = d/s
+
+### 2) 전체 delay
+![nodal delay](https://latex.codecogs.com/gif.latex?d_{nodal}=d_{proc}+d_{queue}+d_{trans}+d_{prop})
+
+### 3) 실제 인터넷 delay & route
+traceroute 프로그램
+- 네트워크 경로 추적
+- 지정된 호스트에 도달할 때까지 통과하는 경로 정보와 경로에서의 지연시간을 추적
+- packet 3개 전송
+- gaia.cs.umass.edu to www.eurecom.fr
+
+### 4) Throughput
+sender와 receiver 사이에 전달되는 단위 시간당 비트 양 (bits/time unit)
+- **instantaneous**: 특정 시점에서의 rate
+- **average**: 장기간에 걸친 rate
+
+#### 4-1) bottleneck link
+- end-end throughput을 제한하는 end-end path의 link
+- throughput이 가장 작은 link를 의미함
+- 서버, 라우터, 클라이언트 하나씩 연결되어 있는 경우 (서버-라우터 링크의 throughput: Rs, 라우터-클라이언트 링크의 throughput: Rc)
+  - Rs < Rc → bottleneck: Rs
+  - Rs > Rc → bottleneck: Rc
+
+#### 4-2) 인터넷 시나리오
+- 주로 transmission rate에 영향을 받음
+- 서버 10대, 라우터 2개, 클라이언트 10대가 연결되어 있는 경우 (라우터-라우터 링크의 throughput: R)
+- 연결별(서버1대-클라이언트1대) end-end throughput: min(Rc,Rs,R/10)
+- transmission rate이 높은 링크는 **intervening traffic**에 의해 bottleneck link가 될 수 있음
 
 ## Quiz
 1. 네트워크 성능을 측정하는 세 가지 파라미터는?  
