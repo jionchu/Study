@@ -108,23 +108,23 @@ destination address는 packet의 header에 들어있음
   - lost packet은 이전 노드 혹은 source end system에서 다시 전송할 수도 있음
 
 ### 1) 네트워크에서 발생하는 delay 종류
-- **processing delay** : 라우터가 packet header를 처리하여 packet의 다음 목적지를 결정하는 데 걸리는 시간
+- ***processing delay*** : 라우터가 packet header를 처리하여 packet의 다음 목적지를 결정하는 데 걸리는 시간
   - bit error 확인
   - output link 결정
   - 일반적으로 msec 단위 → 속도가 빨라서 상관 없음
   - ① routing table lookup
   - ② switching from input port to output port
-- **queueing delay** : 먼저 들어온 packet이 처리되는 동안 대기하는 시간
+- ***queueing delay*** : 먼저 들어온 packet이 처리되는 동안 대기하는 시간
   - output link에서 transmission되기를 기다리는 시간
   - router의 congestion level (=traffic intensity)에 달려있음
-- **transmission delay** : packet의 모든 bit들을 링크로 내보내는 시간 (케이블의 성능과 관련)
+- ***transmission delay*** : packet의 모든 bit들을 링크로 내보내는 시간 (케이블의 성능과 관련)
   - L: packet length (bits)
   - R: link bandwidth (bps)
-  - transmission delay = L/R
-- **propagation delay** : 신호가 목적지까지 도달하는 시간
+  - transmission delay = **L/R**
+- ***propagation delay*** : 신호가 목적지까지 도달하는 시간
   - d: length of physical link
   - s: propagation speed
-  - propagation delay = d/s
+  - propagation delay = **d/s**
 
 ### 2) 전체 delay
 ![nodal delay](https://latex.codecogs.com/gif.latex?d_{nodal}=d_{proc}+d_{queue}+d_{trans}+d_{prop})
@@ -152,7 +152,54 @@ sender와 receiver 사이에 전달되는 단위 시간당 비트 양 (bits/time
 - 주로 transmission rate에 영향을 받음
 - 서버 10대, 라우터 2개, 클라이언트 10대가 연결되어 있는 경우 (라우터-라우터 링크의 throughput: R)
 - 연결별(서버1대-클라이언트1대) end-end throughput: min(Rc,Rs,R/10)
-- transmission rate이 높은 링크는 **intervening traffic**에 의해 bottleneck link가 될 수 있음
+- transmission rate이 높은 링크는 ***intervening traffic***에 의해 bottleneck link가 될 수 있음
+
+## 1.5 protocol layers, service models
+
+네트워크는 다양한 요소들로 복잡하게 구성되어 있음
+- host
+- router
+- link of various media
+- application
+- protocol
+- hardware, software
+
+네트워크를 어떻게 구조화할 수 있을까?
+
+### 1) air travel의 구성
+- ticket (purchase/complain) (***layer 5***)
+- baggage (check/claim) (***layer 4***)
+- gates (load/unload) (***layer 3***)
+- runway takeoff/landing (***layer 2***)
+- airplane routing (***layer 1***)
+
+→ **layer**: 각 layer는 service를 구현함
+- ***internal-layer actions***를 통해
+- 아래 layer에서 제공하는 서비스에 의존함
+
+### 2) layer를 나눈 이유
+복잡한 시스템을 다루기 위해
+- 모듈화를 하면 시스템을 유지하고 업데이트하기 쉬움
+
+### 3) 5-layer Internet protocol stack
+- ***application***
+  - supporting network applications
+  - msg
+  - FTP(file transfer), SMTP(email), HTTP(web)
+- ***transport***
+  - data transfer 처리
+  - segment
+  - TCP, UDP
+- ***network***
+  - routing of datagrams from source to destination
+  - packet, datagram
+  - IP, routing protocols (OSFP, RIP, BGP)
+- ***link***
+  - data transfer between neighboring network elements
+  - frame
+  - Ethernet, 802.11 (WiFi), PPP
+- ***physical***
+  - bits "on the wire"
 
 ## Quiz
 1. 네트워크 성능을 측정하는 세 가지 파라미터는?  
